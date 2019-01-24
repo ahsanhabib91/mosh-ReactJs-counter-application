@@ -4,6 +4,10 @@ import "./App.css";
 import Navbar from "./components/navbar";
 import Counters from "./components/counters";
 
+const AppTitle = () => {
+  return <div className="badge badge-info">This is a Counter App</div>;
+};
+
 class App extends Component {
   constructor() {
     super();
@@ -35,10 +39,19 @@ class App extends Component {
   }
 
   handleIncrement = counter => {
+    console.log("counterrrrrrrrrr:", counter);
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter };
     counters[index].value++;
+    this.setState({ counters });
+  };
+
+  handleDecrement = counter => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].value--;
     this.setState({ counters });
   };
 
@@ -64,9 +77,11 @@ class App extends Component {
           totalCounters={this.state.counters.filter(c => c.value > 0).length}
         />
         <main className="container">
+          <AppTitle />
           <Counters
             counters={this.state.counters}
             onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
             onDelete={this.handleDelete}
             onReset={this.handleReset}
           />
